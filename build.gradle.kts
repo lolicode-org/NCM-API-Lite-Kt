@@ -51,6 +51,9 @@ publishing {
                 name = "Authorization"
                 value = System.getenv("CODEBERG_TOKEN")?.let { "token $it" }.orEmpty()
             }
+            authentication {
+                create<HttpHeaderAuthentication>("header")
+            }
         }
     }
 }
