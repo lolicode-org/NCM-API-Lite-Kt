@@ -205,6 +205,7 @@ public data class SongUrl(
     @SerialName("encodeType") val encodeType: String? = null,
     @SerialName("time") val duration: Long = 0,
     @SerialName("gain") val gain: Float? = null,
+    @SerialName("peak") val peak: Float? = null,
     @SerialName("freeTrialInfo") val freeTrialInfo: FreeTrialInfo? = null
 ) {
     @Serializable
