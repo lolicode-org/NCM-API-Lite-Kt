@@ -40,19 +40,16 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/lolicode-org/NCM-API-Lite-Kt")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-        maven {
-            name = "Codeberg"
-            url = uri("https://codeberg.org/api/packages/lolicode/maven")
-            credentials(HttpHeaderCredentials::class) {
-                name = "Authorization"
-                value = System.getenv("CODEBERG_TOKEN")?.let { "token $it" }.orEmpty()
-            }
-            authentication {
-                create<HttpHeaderAuthentication>("header")
+                username = providers.gradleProperty("gpr.user")
+                    .orElse(providers.environmentVariable("GITHUB_ACTOR"))
+                    .orElse("")
+                    .get()
+                password = providers.gradleProperty("gpr.key")
+                    .orElse(providers.environmentVariable("GITHUB_PACKAGES_TOKEN"))
+                    .orElse(providers.environmentVariable("PACKAGES_READ_TOKEN"))
+                    .orElse(providers.environmentVariable("GITHUB_TOKEN"))
+                    .orElse("")
+                    .get()
             }
         }
     }
